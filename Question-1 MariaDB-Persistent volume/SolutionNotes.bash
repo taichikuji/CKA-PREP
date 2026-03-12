@@ -9,7 +9,6 @@ metadata:
   name: mariadb
   namespace: mariadb
 spec:
-  volumeName: mariadb-pv
   accessModes:
   - ReadWriteOnce
   storageClassName: standard # this has to match the storageClass from the PV
