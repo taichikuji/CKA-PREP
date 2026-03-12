@@ -1,3 +1,6 @@
+# Step 0: Find storageClassName from existing pv
+kubectl get -n mariadb pv mariadb-pv -o yaml | grep -i storageClassName
+
 # Step 1: create PVC with no storageClass (PV is pre-reset by LabSetUp.bash)
 cat <<'EOF' > pvc.yaml
 apiVersion: v1
@@ -9,11 +12,13 @@ spec:
   volumeName: mariadb-pv
   accessModes:
   - ReadWriteOnce
+  storageClassName: standard # this has to match the storageClass from the PV
   resources:
     requests:
       storage: 250Mi
 EOF
-# Note: Use volumeName!
+
+# Note: storageClassName !
 kubectl apply -f pvc.yaml
 kubectl get pvc mariadb -n mariadb
 kubectl get pv mariadb-pv     # should show Bound to mariadb
