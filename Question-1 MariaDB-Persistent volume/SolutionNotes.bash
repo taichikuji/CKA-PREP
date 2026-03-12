@@ -6,12 +6,14 @@ metadata:
   name: mariadb
   namespace: mariadb
 spec:
+  volumeName: mariadb-pv
   accessModes:
   - ReadWriteOnce
   resources:
     requests:
       storage: 250Mi
 EOF
+# Note: Use volumeName!
 kubectl apply -f pvc.yaml
 kubectl get pvc mariadb -n mariadb
 kubectl get pv mariadb-pv     # should show Bound to mariadb
